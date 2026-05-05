@@ -223,10 +223,10 @@ The UI follows a **dark-themed, glassmorphism-inspired** design with the followi
 │  Target Program: [Dropdown ▼] [Transfer]│
 ├─────────────────────────────────────────┤
 │  Equivalency Results (shown on click)   │
-│  ┌─────────────────────────────────┐  │
-│  │ Stats Cards (Matched/NA/Credits)│  │
-│  │ Your Course → Target Equivalent │  │
-│  └─────────────────────────────────┘  │
+│  ┌─────────────────────────────────┐    │
+│  │ Stats Cards (Matched/NA/Credits)│    │
+│  │ Your Course → Target Equivalent │    │
+│  └─────────────────────────────────┘    │
 └─────────────────────────────────────────┘
 ```
 
@@ -307,24 +307,24 @@ The current equivalency algorithm relies on **manual mapping tables** created by
 │           AI-Powered Syllabus Comparison Engine             │
 ├─────────────────────────────────────────────────────────────┤
 │  Input Layer                                                │
-│  ├─ Syllabus Parser (PDF/DOCX/HTML → structured text)     │
-│  ├─ Learning Outcome Extractor                            │
-│  └─ Topic/Keyword Identifier                              │
+│  ├─ Syllabus Parser (PDF/DOCX/HTML → structured text)       │
+│  ├─ Learning Outcome Extractor                              │
+│  └─ Topic/Keyword Identifier                                │
 ├─────────────────────────────────────────────────────────────┤
 │  Processing Layer                                           │
-│  ├─ NLP Preprocessing Pipeline                            │
+│  ├─ NLP Preprocessing Pipeline                              │
 │  ├─ Embedding Generation (BERT/Sentence-BERT)               │
 │  └─ Semantic Similarity Computation                         │
 ├─────────────────────────────────────────────────────────────┤
 │  Decision Layer                                             │
-│  ├─ Multi-Factor Scoring Model                            │
-│  ├─ Prerequisite Graph Analysis                           │
-│  └─ Confidence Threshold Application                      │
+│  ├─ Multi-Factor Scoring Model                              │
+│  ├─ Prerequisite Graph Analysis                             │
+│  └─ Confidence Threshold Application                        │
 ├─────────────────────────────────────────────────────────────┤
 │  Output Layer                                               │
-│  ├─ Equivalency Table with Confidence Scores              │
-│  ├─ Gap Analysis Report                                   │
-│  └─ Recommended Bridge Courses                            │
+│  ├─ Equivalency Table with Confidence Scores                │
+│  ├─ Gap Analysis Report                                     │
+│  └─ Recommended Bridge Courses                              │
 └─────────────────────────────────────────────────────────────┘
 ```
 
