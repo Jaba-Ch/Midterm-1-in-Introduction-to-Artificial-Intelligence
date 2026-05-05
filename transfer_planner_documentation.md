@@ -211,13 +211,13 @@ The UI follows a **dark-themed, glassmorphism-inspired** design with the followi
 ```
 ┌─────────────────────────────────────────┐
 │         Academic Transfer Planner       │
-│     [Computer Engineering Badge]          │
+│     [Computer Engineering Badge]        │
 ├─────────────────────────────────────────┤
 │  My Academic Record                     │
-│  ┌─────────────────────────────────┐  │
+│  ┌───────────────────────────────────┐  │
 │  │ Course Code │ Course Title │ Pass │  │
 │  │ ...         │ ...          │ Yes  │  │
-│  └─────────────────────────────────┘  │
+│  └───────────────────────────────────┘  │
 ├─────────────────────────────────────────┤
 │  Transfer Configuration                 │
 │  Target Program: [Dropdown ▼] [Transfer]│
