@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argus - My Courses</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header Section */
+        .page-header {
+            background: #fff;
+            padding: 20px 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .menu-icon {
+            width: 20px;
+            height: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .menu-icon span {
+            display: block;
+            height: 2px;
+            background: #333;
+            border-radius: 1px;
+        }
+
+        .header-title h1 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            letter-spacing: 0.5px;
+        }
+
+        .breadcrumb {
+            font-size: 12px;
+            color: #888;
+            margin-left: 32px;
+        }
+
+        .breadcrumb a {
+            color: #888;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 20px 40px;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Program Badge */
+        .program-info {
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .program-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .program-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #c41e3a;
+            background: #fff0f2;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #ffcdd2;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: #fff;
+            border-radius: 8px 8px 0 0;
+            border: 1px solid #e0e0e0;
+            border-bottom: none;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 3px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 14px 24px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            border: none;
+            background: none;
+            position: relative;
+            transition: color 0.2s;
+        }
+
+        .tab:hover {
+            color: #333;
+        }
+
+        .tab.active {
+            color: #c41e3a;
+            font-weight: 600;
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: #c41e3a;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            background: #fff;
+            padding: 15px 20px;
+            border-left: 1px solid #e0e0e0;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .all-credits {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .legend-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .legend-circle.program { background: #9e9e9e; }
+        .legend-circle.general { background: #42a5f5; }
+        .legend-circle.finished { background: #66bb6a; }
+        .legend-circle.current { background: #ffca28; }
+        .legend-circle.failed { background: #ef5350; }
+
+        /* Table Container */
+        .table-container {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            table-layout: auto;
+        }
+
+        thead {
+            background: #fafafa;
+        }
+
+        th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #555;
+            border-bottom: 2px solid #e0e0e0;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        th:first-child {
+            width: 40px;
+            min-width: 40px;
+        }
+
+        th:nth-child(2) {
+            width: 100px;
+            min-width: 100px;
+        }
+
+        th:nth-child(3) {
+            width: auto;
+            min-width: 300px;
+        }
+
+        th:nth-child(4) {
+            width: 120px;
+            min-width: 120px;
+        }
+
+        th:nth-child(5) {
+            width: 80px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        th:nth-child(6) {
+            width: 90px;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        th:nth-child(7) {
+            width: 70px;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        th:nth-child(8) {
+            width: 90px;
+            min-width: 90px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        td:nth-child(3) {
+            white-space: normal;
+            min-width: 300px;
+        }
+
+        td:nth-child(5), td:nth-child(6), td:nth-child(7) {
+            text-align: center;
+        }
+
+        tbody tr:hover {
+            background: #fafafa;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Status Indicators */
+        .status-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        .status-icon.program-course { background: #9e9e9e; }
+        .status-icon.general-course { background: #42a5f5; }
+        .status-icon.finished { 
+            background: #66bb6a;
+            position: relative;
+        }
+        .status-icon.finished::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        .status-icon.current { background: #ffca28; }
+        .status-icon.failed { 
+            background: #ef5350;
+            position: relative;
+        }
+        .status-icon.failed::after {
+            content: '✕';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        /* Course Name Links */
+        .course-name {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .course-name:hover {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+
+        /* Program Code */
+        .program-code {
+            color: #666;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Score styling */
+        .score {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .score-high { color: #2e7d32; }
+        .score-medium { color: #f57c00; }
+        .score-low { color: #c62828; }
+
+        /* Credits */
+        .credits {
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* Transfer Section */
+        .transfer-section {
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-top: 25px;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .transfer-header {
+            padding: 15px 20px;
+            background: #fafafa;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .transfer-body {
+            padding: 20px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .control-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #555;
+            min-width: 120px;
+        }
+
+        select {
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #333;
+            background: #fff;
+            min-width: 320px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        select:focus {
+            border-color: #c41e3a;
+            box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1);
+        }
+
+        .transfer-btn {
+            padding: 10px 28px;
+            background: #c41e3a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .transfer-btn:hover {
+            background: #a0172f;
+        }
+
+        .transfer-btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Equivalency Results */
+        .results-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .results-header {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #c41e3a;
+        }
+
+        .stats-cards {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-box {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px 18px;
+            min-width: 140px;
+        }
+
+        .stat-box-label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .stat-box-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c41e3a;
+        }
+
+        .equivalency-table-container {
+            background: #fafafa;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+            overflow: hidden;
+        }
+
+        .equivalency-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .equivalency-table th {
+            background: #f0f0f0;
+            color: #555;
+            font-size: 11px;
+            padding: 10px 14px;
+        }
+
+        .equivalency-table td {
+            padding: 12px 14px;
+            font-size: 13px;
+        }
+
+        .match-yes {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .match-no {
+            color: #c62828;
+            font-style: italic;
+        }
+
+        .additional-row {
+            background: #e8f5e9 !important;
+        }
+
+        .additional-tag {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 10px;
+            }
+
+            .tabs {
+                overflow-x: auto;
+            }
+
+            .control-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            select {
+                min-width: 100%;
+            }
+
+            th, td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+
+            .stats-cards {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="header-title">
+            <div class="menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <h1>MY COURSES</h1>
+        </div>
+        <div class="breadcrumb">
+            <a href="#">Home</a> &gt; My Courses
+        </div>
+    </div>
+
+    <div class="main-content">
+        <!-- Program Info -->
+        <div class="program-info">
+            <span class="program-label">Current Program:</span>
+            <span class="program-name">Computer Engineering (International)</span>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab active">All Courses</button>
+                <button class="tab">Major Program</button>
+                <button class="tab">ENGCEN</button>
+                <button class="tab">Other Programs</button>
+            </div>
+        </div>
+
+        <!-- Stats & Legend -->
+        <div class="stats-bar">
+            <span class="all-credits">All Credits 212</span>
+            <div class="legend">
+                <span class="legend-item"><span class="legend-circle program"></span>Program Course</span>
+                <span class="legend-item"><span class="legend-circle general"></span>General Course</span>
+                <span class="legend-item"><span class="legend-circle finished"></span>Successfully Finished</span>
+                <span class="legend-item"><span class="legend-circle current"></span>Currently chosen credits (30 credits)</span>
+                <span class="legend-item"><span class="legend-circle failed"></span>Failed</span>
+            </div>
+        </div>
+
+        <!-- Course Table -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Program Code</th>
+                        <th>Course Name</th>
+                        <th>Cred. Type</th>
+                        <th>Score</th>
+                        <th>Gain Cred.</th>
+                        <th>Credit</th>
+                        <th>Belong.</th>
+                    </tr>
+                </thead>
+                <tbody id="courseTableBody">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Transfer Section -->
+        <div class="transfer-section">
+            <div class="transfer-header">Transfer Planning</div>
+            <div class="transfer-body">
+                <div class="control-row">
+                    <span class="control-label">Target Program:</span>
+                    <select id="targetProgram">
+                        <option value="">-- Select Target Program --</option>
+                        <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Civil Engineering">Civil Engineering</option>
+                    </select>
+                    <button class="transfer-btn" onclick="performTransfer()">Transfer</button>
+                </div>
+
+                <div class="results-section" id="resultsSection">
+                    <div class="results-header">Equivalency Results</div>
+                    <div class="stats-cards" id="statsCards"></div>
+                    <div class="equivalency-table-container">
+                        <table class="equivalency-table">
+                            <thead>
+                                <tr>
+                                    <th>Your Course (Completed)</th>
+                                    <th>Equivalent in Target Program</th>
+                                </tr>
+                            </thead>
+                            <tbody id="equivalencyTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Course data matching Argus system exactly
+        const myCourses = [
+            { code: "P737", name: "Academic Techniques (ENG)", type: "General", score: 100.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "MATH150", name: "Calculus I (ENG)", type: "General", score: 82.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "Q185", name: "English Language Course C1-1 (ENG)", type: "General", score: 80.50, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "Q955", name: "English Language Course C1-2 (ENG)", type: "General", score: 92.20, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "P432", name: "Introduction to Modern Thought I (ENG)", type: "General", score: 92.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CS50", name: "Introduction to Programming (ENG)", type: "Program", score: 91.50, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "MATH151", name: "Calculus II (ENG)", type: "General", score: 78.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "PHYS195", name: "Basics of Physics I (ENG)", type: "General", score: 75.50, gainCred: 8, credit: 8, status: "finished", passed: true },
+            { code: "DE112", name: "Mathematical Foundation of Computing (ENG)", type: "Program", score: 88.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "DE111", name: "Computer Organization (ENG)", type: "Program", score: 85.50, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "PHYS196", name: "Basics of Physics II (ENG)", type: "General", score: 72.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "MATH252", name: "Calculus III (ENG)", type: "General", score: 80.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CHEM100", name: "Introduction to General Chemistry (ENG)", type: "General", score: 76.50, gainCred: 8, credit: 8, status: "finished", passed: true },
+            { code: "MATH254", name: "Introduction to Linear Algebra (ENG)", type: "General", score: 84.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "EE210", name: "Circuit Analysis I (ENG)", type: "Program", score: 79.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CE111", name: "Procedural Programming with C (ENG)", type: "Program", score: 90.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "EE300", name: "Computational and Statistical Methods (ENG)", type: "Program", score: 77.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CS312", name: "Computer and Data Networks (ENG)", type: "Program", score: 86.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CS221", name: "Algorithms and Data Structures (ENG)", type: "Program", score: 89.50, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "MATH311", name: "Principles of Numerical Methods (ENG)", type: "General", score: 81.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "EE310", name: "Circuit Analysis II (ENG)", type: "Program", score: 74.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CE375", name: "Embedded Systems (ENG)", type: "Program", score: 87.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "DE101", name: "Introduction to Operating Systems (ENG)", type: "Program", score: 83.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CE470", name: "Digital Circuits (ENG)", type: "Program", score: 85.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "EE410", name: "Signals and Systems (ENG)", type: "Program", score: 78.50, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "R205", name: "Basics of Entrepreneurship (ENG)", type: "General", score: 93.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "T077", name: "Architecture and Programming of Microprocessors (ENG)", type: "Program", score: 88.50, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "CS326", name: "System Programming (ENG)", type: "Program", score: 82.00, gainCred: 6, credit: 6, status: "finished", passed: true },
+            { code: "T028", name: "IT Project Management (ENG)", type: "Program", score: 0.00, gainCred: 0, credit: 6, status: "current", passed: false },
+            { code: "CS223", name: "Introduction to Cybersecurity (ENG)", type: "Program", score: 0.00, gainCred: 0, credit: 6, status: "current", passed: false },
+            { code: "CE490A", name: "Senior Design Project A (ENG)", type: "Program", score: 0.00, gainCred: 0, credit: 6, status: "current", passed: false },
+            // 5 additional courses (always passed)
+            { code: "CS321", name: "Introduction to Machine Learning (ENG)", type: "Program", score: 88.00, gainCred: 6, credit: 6, status: "finished", passed: true, additional: true },
+            { code: "CS322", name: "Databases and Information Systems (ENG)", type: "Program", score: 91.00, gainCred: 6, credit: 6, status: "finished", passed: true, additional: true },
+            { code: "CS314", name: "Distributed and Parallel Computing (ENG)", type: "Program", score: 85.00, gainCred: 6, credit: 6, status: "finished", passed: true, additional: true },
+            { code: "CS413", name: "Web Programming (ENG)", type: "Program", score: 90.00, gainCred: 6, credit: 6, status: "finished", passed: true, additional: true },
+            { code: "UNI007", name: "Introduction to Artificial Intelligence (ENG)", type: "Program", score: 95.00, gainCred: 6, credit: 6, status: "finished", passed: true, additional: true },
+        ];
+
+        // Target program course catalogs
+        const targetCatalogs = {
+            "Electrical and Electronics Engineering": {
+                "MATH150": "Calculus I (ENG)",
+                "PHYS195": "Basics of Physics I (ENG)",
+                "Q185": "English Language Course C1-1 (ENG)",
+                "P432": "Introduction to Modern Thought I (ENG)",
+                "CS50": "Introduction to Programming (ENG)",
+                "MATH151": "Calculus II (ENG)",
+                "PHYS196": "Basics of Physics II (ENG)",
+                "Q955": "English Language Course C1-2 (ENG)",
+                "DE112": "Mathematical Foundation of Computing (ENG)",
+                "DE111": "Computer Organization (ENG)",
+                "MATH252": "Calculus III (ENG)",
+                "CHEM100": "Introduction to General Chemistry (ENG)",
+                "MATH254": "Introduction to Linear Algebra (ENG)",
+                "EE210": "Circuit Analysis I (ENG)",
+                "CE111": "Procedural Programming with C (ENG)",
+                "EE300": "Computational and Statistical Methods (ENG)",
+                "EE330": "Fundamentals of Engineering Electronics (ENG)",
+                "EE310": "Circuit Analysis II (ENG)",
+                "MATH311": "Principles of Numerical Methods (ENG)",
+                "P737": "Academic Techniques (ENG)",
+                "CE375": "Embedded Systems (ENG)",
+                "EE340": "Electric and Magnetic Fields (ENG)",
+                "EE380": "Electrical Energy Conversion (ENG)",
+                "EE430": "Analysis and Design of Electronic Circuits (ENG)",
+                "EE410": "Signals and Systems (ENG)",
+                "EE434": "Electronic Materials and Devices (ENG)",
+                "EE440": "Electromagnetic Waves (ENG)",
+                "EE450": "Digital Signal Processing (ENG)",
+                "EE458": "Analog and Pulse Communication Systems (ENG)",
+                "EE480": "Power System Analysis (ENG)",
+                "EE483": "Power Distribution Systems (ENG)",
+                "EE490A": "Senior Design Project Conception (ENG)",
+                "EE490B": "Senior Design Project (ENG)",
+                "EE420": "Feedback Control Systems (ENG)",
+                "EE455": "Antenna Theory and Design (ENG)",
+                "EE540": "Microwave Devices and Systems (ENG)",
+                "EE534": "Solid State Devices (ENG)",
+                "CE470": "Digital Circuits (ENG)",
+                "EE510": "Introduction to Energy Systems and Technologies (ENG)",
+                "T077": "Architecture and Programming of Microprocessors (ENG)",
+                "CE470L": "Digital Logic Laboratory (ENG)",
+                "U589": "AWS Cloud Practitioner (ENG)",
+                "U837": "Drones (ENG)",
+                "DE116": "Hardware Design and Prototyping (ENG)",
+                "DE117": "Systems, sustainability and climate change (ENG)",
+                "UNI007": "Introduction to Artificial Intelligence (ENG)",
+            },
+            "Computer Science": {
+                "MATH150": "Calculus I (ENG)",
+                "CS50": "Introduction to Programming (ENG)",
+                "Q185": "English Language Course C1-1 (ENG)",
+                "P432": "Introduction to Modern Thought I (ENG)",
+                "CS212": "Cyberlaw and Ethics (ENG)",
+                "MATH151": "Calculus II (ENG)",
+                "CS211": "Object Oriented Programming (ENG)",
+                "Q955": "English Language Course C1-2 (ENG)",
+                "DE112": "Mathematical Foundation of Computing (ENG)",
+                "DE111": "Computer Organization (ENG)",
+                "MATH252": "Calculus III (ENG)",
+                "CS311": "Programming Languages (ENG)",
+                "MATH254": "Introduction to Linear Algebra (ENG)",
+                "EE300": "Computational and Statistical Methods (ENG)",
+                "CS312": "Computer and Data Networks (ENG)",
+                "CS221": "Algorithms and Data Structures (ENG)",
+                "MATH311": "Principles of Numerical Methods (ENG)",
+                "CS223": "Introduction to Cybersecurity (ENG)",
+                "CS313": "Elements of Computational Complexity (ENG)",
+                "DE101": "Introduction to Operating Systems (ENG)",
+                "P737": "Academic Techniques (ENG)",
+                "CS321": "Introduction to Machine Learning (ENG)",
+                "CS322": "Databases and Information Systems (ENG)",
+                "CS323": "Design Patterns (ENG)",
+                "CS314": "Distributed and Parallel Computing (ENG)",
+                "CS411": "Nand2Tetris (ENG)",
+                "CS413": "Web Programming (ENG)",
+                "T028": "IT Project Management (ENG)",
+                "CS424": "DevOps Technologies (ENG)",
+                "CS422": "Functional Programming (ENG)",
+                "DE115": "Computer and Society (ENG)",
+                "CS423": "Senior Design Project (ENG)",
+                "CHEM100": "Introduction to General Chemistry (ENG)",
+                "PHYS195": "Basics of Physics I (ENG)",
+                "PHYS196": "Basics of Physics II (ENG)",
+                "BIOL100": "Biology for Engineers (ENG)",
+                "CS214": "Introduction to Computational Linguistics (ENG)",
+                "U589": "AWS Cloud Practitioner (ENG)",
+                "U837": "Drones (ENG)",
+                "CS327": "Computer Vision (ENG)",
+                "DE114": "Exploratory Data Analysis with Python (ENG)",
+                "DE120": "Introduction to Energy Systems and Technologies (ENG)",
+                "CS324": "Artificial Neural Networks (ENG)",
+                "CS326": "System Programming (ENG)",
+                "CS412": "Unix/Linux System Administration (ENG)",
+                "CS415": "Introduction to Information Theory (ENG)",
+                "CS417": "Introduction to Natural Language Processing (ENG)",
+                "S826": "Introduction to Computer Modeling (ENG)",
+                "CS421": "Mobile Applications Development (ENG)",
+                "CS425": "Message Queueing and Data Streaming (ENG)",
+                "CS426": "Big Data Systems (ENG)",
+                "DE116": "Hardware Design and Prototyping (ENG)",
+                "DE117": "Systems, sustainability and climate change (ENG)",
+                "UNI007": "Introduction to Artificial Intelligence (ENG)",
+            },
+            "Civil Engineering": {
+                "MATH150": "Calculus I (ENG)",
+                "PHYS195": "Basics of Physics I (ENG)",
+                "Q185": "English Language Course C1-1 (ENG)",
+                "P432": "Introduction to Modern Thought I (ENG)",
+                "CS50": "Introduction to Programming (ENG)",
+                "MATH151": "Calculus II (ENG)",
+                "PHYS196": "Basics of Physics II (ENG)",
+                "Q955": "English Language Course C1-2 (ENG)",
+                "DE112": "Mathematical Foundation of Computing (ENG)",
+                "DE111": "Computer Organization (ENG)",
+                "MATH252": "Calculus III (ENG)",
+                "CHEM100": "Introduction to General Chemistry (ENG)",
+                "MATH254": "Introduction to Linear Algebra (ENG)",
+                "CE111": "Procedural Programming with C (ENG)",
+                "MATH311": "Principles of Numerical Methods (ENG)",
+                "P737": "Academic Techniques (ENG)",
+                "CE201": "Statics (ENG)",
+                "CE202": "Dynamics (ENG)",
+                "CE203": "Mechanics of Materials (ENG)",
+                "CE204": "Fluid Mechanics (ENG)",
+                "CE301": "Structural Analysis (ENG)",
+                "CE302": "Soil Mechanics (ENG)",
+                "CE303": "Concrete Structures (ENG)",
+                "CE304": "Steel Structures (ENG)",
+                "CE305": "Transportation Engineering (ENG)",
+                "CE306": "Environmental Engineering (ENG)",
+                "CE307": "Hydrology and Water Resources (ENG)",
+                "CE308": "Construction Management (ENG)",
+                "CE309": "Surveying and Geomatics (ENG)",
+                "CE401": "Foundation Engineering (ENG)",
+                "CE402": "Earthquake Engineering (ENG)",
+                "CE403": "Urban Planning (ENG)",
+                "CE404": "Bridge Engineering (ENG)",
+                "CE405": "Advanced Concrete Design (ENG)",
+                "CE490A": "Senior Design Project A (ENG)",
+                "CE490B": "Senior Design Project B (ENG)",
+                "R205": "Basics of Entrepreneurship (ENG)",
+                "T028": "IT Project Management (ENG)",
+                "DE117": "Systems, sustainability and climate change (ENG)",
+                "UNI007": "Introduction to Artificial Intelligence (ENG)",
+            }
+        };
+
+        // Equivalency mapping logic
+        const equivalencyMaps = {
+            "Electrical and Electronics Engineering": {
+                "P737": "P737",
+                "MATH150": "MATH150",
+                "Q185": "Q185",
+                "Q955": "Q955",
+                "P432": "P432",
+                "CS50": "CS50",
+                "MATH151": "MATH151",
+                "PHYS195": "PHYS195",
+                "DE112": "DE112",
+                "DE111": "DE111",
+                "PHYS196": "PHYS196",
+                "MATH252": "MATH252",
+                "CHEM100": "CHEM100",
+                "MATH254": "MATH254",
+                "EE210": "EE210",
+                "CE111": "CE111",
+                "EE300": "EE300",
+                "CS312": "N/A",
+                "CS221": "N/A",
+                "MATH311": "MATH311",
+                "EE310": "EE310",
+                "CE375": "CE375",
+                "DE101": "N/A",
+                "CE470": "CE470",
+                "EE410": "EE410",
+                "R205": "N/A",
+                "T077": "T077",
+                "CS326": "N/A",
+                "T028": "T028",
+                "CS223": "N/A",
+                "CE490A": "EE490A",
+                "CS321": "N/A",
+                "CS322": "N/A",
+                "CS314": "N/A",
+                "CS413": "N/A",
+                "UNI007": "UNI007",
+            },
+            "Computer Science": {
+                "P737": "P737",
+                "MATH150": "MATH150",
+                "Q185": "Q185",
+                "Q955": "Q955",
+                "P432": "P432",
+                "CS50": "CS50",
+                "MATH151": "MATH151",
+                "PHYS195": "PHYS195",
+                "DE112": "DE112",
+                "DE111": "DE111",
+                "PHYS196": "PHYS196",
+                "MATH252": "MATH252",
+                "CHEM100": "CHEM100",
+                "MATH254": "MATH254",
+                "EE210": "N/A",
+                "CE111": "CS211",
+                "EE300": "EE300",
+                "CS312": "CS312",
+                "CS221": "CS221",
+                "MATH311": "MATH311",
+                "EE310": "N/A",
+                "CE375": "N/A",
+                "DE101": "DE101",
+                "CE470": "N/A",
+                "EE410": "N/A",
+                "R205": "N/A",
+                "T077": "CS411",
+                "CS326": "CS326",
+                "T028": "T028",
+                "CS223": "CS223",
+                "CE490A": "CS423",
+                "CS321": "CS321",
+                "CS322": "CS322",
+                "CS314": "CS314",
+                "CS413": "CS413",
+                "UNI007": "UNI007",
+            },
+            "Civil Engineering": {
+                "P737": "P737",
+                "MATH150": "MATH150",
+                "Q185": "Q185",
+                "Q955": "Q955",
+                "P432": "P432",
+                "CS50": "CS50",
+                "MATH151": "MATH151",
+                "PHYS195": "PHYS195",
+                "DE112": "N/A",
+                "DE111": "N/A",
+                "PHYS196": "PHYS196",
+                "MATH252": "MATH252",
+                "CHEM100": "CHEM100",
+                "MATH254": "MATH254",
+                "EE210": "N/A",
+                "CE111": "N/A",
+                "EE300": "MATH311",
+                "CS312": "N/A",
+                "CS221": "N/A",
+                "MATH311": "MATH311",
+                "EE310": "N/A",
+                "CE375": "N/A",
+                "DE101": "N/A",
+                "CE470": "N/A",
+                "EE410": "N/A",
+                "R205": "R205",
+                "T077": "N/A",
+                "CS326": "N/A",
+                "T028": "T028",
+                "CS223": "N/A",
+                "CE490A": "CE490A",
+                "CS321": "N/A",
+                "CS322": "N/A",
+                "CS314": "N/A",
+                "CS413": "N/A",
+                "UNI007": "UNI007",
+            }
+        };
+
+        function getScoreClass(score) {
+            if (score >= 90) return 'score-high';
+            if (score >= 70) return 'score-medium';
+            return 'score-low';
+        }
+
+        function getStatusIcon(status) {
+            const icons = {
+                'finished': '<span class="status-icon finished"></span>',
+                'current': '<span class="status-icon current"></span>',
+                'failed': '<span class="status-icon failed"></span>'
+            };
+            return icons[status] || '';
+        }
+
+        function getTypeIcon(type) {
+            return type === 'General' 
+                ? '<span class="status-icon general-course"></span>' 
+                : '<span class="status-icon program-course"></span>';
+        }
+
+        function populateCourseTable() {
+            const tbody = document.getElementById('courseTableBody');
+            tbody.innerHTML = '';
+
+            myCourses.forEach(course => {
+                const row = document.createElement('tr');
+                if (course.additional) {
+                    row.classList.add('additional-row');
+                }
+
+                const scoreClass = getScoreClass(course.score);
+                const additionalTag = course.additional ? '<span class="additional-tag">ADDITIONAL</span>' : '';
+
+                row.innerHTML = `
+                    <td>${getStatusIcon(course.status)}</td>
+                    <td class="program-code">${course.code}</td>
+                    <td><a href="#" class="course-name">${course.name}</a>${additionalTag}</td>
+                    <td>${getTypeIcon(course.type)} ${course.type}</td>
+                    <td class="score ${scoreClass}">${course.score.toFixed(2)}</td>
+                    <td class="credits">${course.gainCred}</td>
+                    <td class="credits">${course.credit}</td>
+                    <td>ENGCEN</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function performTransfer() {
+            const targetProgram = document.getElementById('targetProgram').value;
+
+            if (!targetProgram) {
+                alert('Please select a target program first!');
+                return;
+            }
+
+            const resultsSection = document.getElementById('resultsSection');
+            const equivalencyTableBody = document.getElementById('equivalencyTableBody');
+            const statsCards = document.getElementById('statsCards');
+            const targetCatalog = targetCatalogs[targetProgram];
+            const equivalencyMap = equivalencyMaps[targetProgram];
+
+            equivalencyTableBody.innerHTML = '';
+
+            let matchedCount = 0;
+            let naCount = 0;
+            let totalCredits = 0;
+
+            // Only include passed courses
+            const passedCourses = myCourses.filter(c => c.passed);
+
+            passedCourses.forEach(course => {
+                const equivalentCode = equivalencyMap[course.code];
+                const row = document.createElement('tr');
+
+                if (equivalentCode && equivalentCode !== "N/A") {
+                    const equivalentTitle = targetCatalog[equivalentCode] || equivalentCode;
+                    row.innerHTML = `
+                        <td><strong>${course.code}</strong> — ${course.name}</td>
+                        <td class="match-yes"><strong>${equivalentCode}</strong> — ${equivalentTitle}</td>
+                    `;
+                    matchedCount++;
+                    totalCredits += course.credit;
+                } else {
+                    row.innerHTML = `
+                        <td><strong>${course.code}</strong> — ${course.name}</td>
+                        <td class="match-no">N/A</td>
+                    `;
+                    naCount++;
+                }
+
+                equivalencyTableBody.appendChild(row);
+            });
+
+            // Update stats
+            statsCards.innerHTML = `
+                <div class="stat-box">
+                    <div class="stat-box-label">Matched Courses</div>
+                    <div class="stat-box-value">${matchedCount}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-label">No Equivalent</div>
+                    <div class="stat-box-value">${naCount}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-label">Transferable Credits</div>
+                    <div class="stat-box-value">${totalCredits}</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-label">Match Rate</div>
+                    <div class="stat-box-value">${Math.round((matchedCount / passedCourses.length) * 100)}%</div>
+                </div>
+            `;
+
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            populateCourseTable();
+        };
+    </script>
+</body>
+</html>
